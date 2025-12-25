@@ -92,6 +92,25 @@ proc getGraphListBySlug*(name, list: string): Future[List] {.async.} =
     js = await fetch(url)
   result = parseGraphList(js)
 
+
+proc getGraphFollowing*(id: string; after=""): Future[UsersTimeline] {.async.} =
+  if id.len == 0: return
+  let
+    cursor = if after.len > 0: "\"cursor\":\"$1\"," % after else: ""
+    variables = followVariables % [id, cursor]
+    url = apiReq(graphFollowing, variables)
+    js = await fetch(url)
+  result = parseGraphFollowTimeline(js, id)
+
+proc getGraphFollowers*(id: string; after=""): Future[UsersTimeline] {.async.} =
+  if id.len == 0: return
+  let
+    cursor = if after.len > 0: "\"cursor\":\"$1\"," % after else: ""
+    variables = followVariables % [id, cursor]
+    url = apiReq(graphFollowers, variables)
+    js = await fetch(url)
+  result = parseGraphFollowTimeline(js, id)
+
 proc getGraphList*(id: string): Future[List] {.async.} =
   let 
     url = apiReq(graphListById, """{"listId": "$1"}""" % id)

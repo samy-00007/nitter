@@ -24,6 +24,8 @@ const
   graphListBySlug* = "K6wihoTiTrzNzSF8y1aeKQ/ListBySlug"
   graphListMembers* = "fuVHh5-gFn8zDBBxb8wOMA/ListMembers"
   graphListTweets* = "VQf8_XQynI3WzH6xopOMMQ/ListTimeline"
+  graphFollowers* = "kuFUYP9eV1FPoEy4N-pi7w/Followers"
+  graphFollowing* = "BEkNpEt5pNETESoqMsTEGA/Following"
 
   gqlFeatures* = """{
   "android_ad_formats_media_component_render_overlay_enabled": false,
@@ -113,6 +115,13 @@ const
   "withBirdwatchNotes": false,
   "withVoice": false,
   "withV2Timeline": true
+}""".replace(" ", "").replace("\n", "")
+
+  followVariables* = """{
+  "userId" : "$1", $2
+  "count" : 20,
+  "includePromotedContent": false,
+  "withGrokTranslatedBio": false
 }""".replace(" ", "").replace("\n", "")
 
   tweetDetailVars* = """{
